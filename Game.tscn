@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgyue8fekrf3k"]
+
+[ext_resource type="PackedScene" uid="uid://cnsa6411vitje" path="res://characters/SpaceMarine.tscn" id="1_cciph"]
+
+[node name="Game" type="Node2D"]
+
+[node name="SpaceMarine" parent="." instance=ExtResource("1_cciph")]
+position = Vector2(102, 39)
