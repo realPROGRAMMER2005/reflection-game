@@ -1,7 +1,8 @@
-extends Node
+extends Node2D
 class_name LevelSegment
 
-enum LevelSegmentTypes {FIRST, REGULAR, LAST}
 
-@export var type: LevelSegmentTypes = LevelSegmentTypes.REGULAR
-@onready var next_segment_point: NextSegmentPoint = get_node("NextSegmentPoint")
+var next_segment_point: NextSegmentPoint
+
+func _ready() -> void:
+	next_segment_point = Utilities.find_node_by_class_name(self, NextSegmentPoint)

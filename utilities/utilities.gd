@@ -12,22 +12,53 @@ func get_level():
 	return level
 
 
-func load_scenes_from_folder(folder_path: String) -> Array:
-	var scenes: Array = []
+func load_scene_tree(path: String) -> Variant:
+	var dir: DirAccess = DirAccess.open(path)
+	if dir == null:
+		push_error("Невозможно открыть директорию: " + path)
+		return {}
 	
-	var dir = DirAccess.open(folder_path)
-	if dir:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if not dir.current_is_dir() and (file_name.ends_with(".tscn") or file_name.ends_with(".scn")):
-				var scene = load(folder_path + file_name)
-				scenes.append(scene)
+	var subdirs: Dictionary = {}  # Для подпапок
+	var scenes: Array = []        # Для файлов сцен
+	
+	# Начинаем обход содержимого директории
+	dir.list_dir_begin()
+	var file_name: String = dir.get_next()
+	while file_name != "":
+		# Пропускаем скрытые файлы и директории (начинающиеся с точки)
+		if file_name.begins_with("."):
 			file_name = dir.get_next()
-	else:
-		print("Ошибка: не удалось открыть папку ", folder_path)
+			continue
+		
+		var full_path = path + "/" + file_name
+		if dir.current_is_dir():
+			# Рекурсивно обходим подпапку
+			var subtree = load_scene_tree(full_path)
+			subdirs[file_name] = subtree
+		else:
+			# Проверяем расширение файла. Поддерживаем .tsn и .tscn.
+			var ext = file_name.get_extension().to_lower()
+			if ext in ["tsn", "tscn"]:
+				var scene = load(full_path)
+				if scene:
+					scenes.append(scene)
+				else:
+					push_error("Не удалось загрузить сцену: " + full_path)
+		file_name = dir.get_next()
 	
-	return scenes
+	dir.list_dir_end()
+	
+	# Если в папке одновременно есть и подпапки, и файлы сцен – считаем это ошибкой
+	if subdirs.size() > 0 and scenes.size() > 0:
+		push_error("Директория '" + path + "' содержит и подпапки, и файлы сцен. Это недопустимо!")
+		return {}
+	
+	# Если есть подпапки – возвращаем словарь, иначе – массив сцен
+	if subdirs.size() > 0:
+		return subdirs
+	else:
+		return scenes
+
 
 func find_nodes_by_class_name(root_node: Node, desired_class: Script) -> Array:
 	var result: Array = []
