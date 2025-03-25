@@ -31,29 +31,30 @@ enum CharacterMovementTypes {FLYING, WALKING}
 @export var can_aim: bool = false
 
 
-@onready var muzzle: Node2D = get_node("Muzzle")
-@onready var hitbox_area: HitboxArea = get_node("HitboxArea")
+var muzzle: Muzzle
+var hitbox_area: HitboxArea
 
 
 @export var jump_force: float = 400.0
-@export var gravity: float = 900.0
+@export var gravity: float = 0
 var jumps_remaining: int = max_jumps_count
 
 signal get_damage
 
 func _ready() -> void:
+	muzzle = Utilities.find_node_by_class_name(self, Muzzle)
+	hitbox_area = Utilities.find_node_by_class_name(self, HitboxArea)
+	
 	hitbox_area.connect("get_damage", on_get_damage)
+
 
 func _process(delta: float) -> void:
 	fire_rate_timer += delta
-	if fire_rate_timer > fire_rate:
-		fire_rate_timer = 0
 
 func _physics_process(delta: float) -> void:
 	var direction = Vector2.ZERO
 	
 	if controlled_by_player and can_move:
-		# Горизонтальное движение
 		if Input.is_action_pressed("move_right"):
 			direction.x += 1
 		if Input.is_action_pressed("move_left"):
@@ -105,11 +106,22 @@ func die():
 
 
 func attack():
-	for i in range(bullets_spread):
-			var bullet_instance: Bullet = bullet_scene.instantiate()
-			bullet_instance.ricochets = bullet_ricochets
-			bullet_instance.penetration = bullet_penetration
-			bullet_instance.damage = damage
-			bullet_instance.damage_groups = enemy_groups
+	if fire_rate_timer >= fire_rate:
+		for i in range(bullets_spread):
+				var bullet_instance: Bullet = bullet_scene.instantiate()
+				bullet_instance.ricochets = bullet_ricochets
+				bullet_instance.penetration = bullet_penetration
+				bullet_instance.damage = damage
+				bullet_instance.damage_groups = enemy_groups
+				var level = get_parent()
+				if level:
+					level.add_child(bullet_instance)
+				bullet_instance.global_position = muzzle.global_position
+				bullet_instance.global_rotation = muzzle.global_rotation
+				bullet_instance.sender_hitbox_area = hitbox_area
+				bullet_instance.direction = Vector2(cos(muzzle.global_rotation), sin(muzzle.global_rotation)).normalized()
+		
+		fire_rate_timer = 0
+				
 
 	

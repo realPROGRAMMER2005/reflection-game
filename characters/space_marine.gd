@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 		if velocity.x != 0:
 			legs_sprite.play("run")
 		else:
-			legs_sprite.play("idle")
+			legs_sprite.play("stand")
 	
 	if velocity.x > 0:
 		legs_sprite.scale.x = 1

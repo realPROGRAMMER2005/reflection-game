@@ -1,12 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://4yrqflu72538"]
+[gd_scene load_steps=4 format=3 uid="uid://4yrqflu72538"]
 
 [ext_resource type="Script" uid="uid://duiya5rv3653v" path="res://characters/character.gd" id="1_uschp"]
 [ext_resource type="PackedScene" uid="uid://b5g2wadjmbkbx" path="res://hixbox_area/HitboxArea.tscn" id="2_doqj4"]
+[ext_resource type="PackedScene" uid="uid://dc4gvq8wst42p" path="res://muzzle/Muzzle.tscn" id="3_32im1"]
 
 [node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_uschp")
 movement_type = 1
 
-[node name="Muzzle" type="Node2D" parent="."]
-
 [node name="HitboxArea" parent="." instance=ExtResource("2_doqj4")]
+
+[node name="Muzzle" parent="." instance=ExtResource("3_32im1")]

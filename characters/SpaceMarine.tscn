@@ -1,8 +1,10 @@
-[gd_scene load_steps=71 format=3 uid="uid://cnsa6411vitje"]
+[gd_scene load_steps=73 format=3 uid="uid://cnsa6411vitje"]
 
 [ext_resource type="Script" uid="uid://dlftjxlgwq8g7" path="res://characters/space_marine.gd" id="1_flwgp"]
 [ext_resource type="Texture2D" uid="uid://csookaq70fywa" path="res://assets/space_marine/space_marine_parts_spritesheet.png" id="2_5r43p"]
+[ext_resource type="PackedScene" uid="uid://clvhkst38koys" path="res://bullets/Plasma.tscn" id="2_kxomi"]
 [ext_resource type="PackedScene" uid="uid://b5g2wadjmbkbx" path="res://hixbox_area/HitboxArea.tscn" id="3_1owr7"]
+[ext_resource type="PackedScene" uid="uid://dc4gvq8wst42p" path="res://muzzle/Muzzle.tscn" id="4_dxfjt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4d245"]
 atlas = ExtResource("2_5r43p")
@@ -490,6 +492,7 @@ fire_rate = 0.3
 movement_type = 1
 can_jump = true
 can_move = true
+bullet_scene = ExtResource("2_kxomi")
 controlled_by_player = true
 can_aim = true
 
@@ -514,4 +517,4 @@ shape = SubResource("RectangleShape2D_7p6mm")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Muzzle" type="Node2D" parent="."]
+[node name="Muzzle" parent="." instance=ExtResource("4_dxfjt")]

@@ -16,4 +16,5 @@ func _on_hitbox_area_exited(hitbox_area: HitboxArea) -> void:
 		if hitbox_areas_to_damage[i] == hitbox_area:
 			hitbox_areas_to_damage.remove_at(i)
 			break
+
 	
