@@ -482,9 +482,10 @@ animations = [{
 radius = 4.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7p6mm"]
-size = Vector2(12, 30)
+size = Vector2(12, 27)
 
 [node name="SpaceMarine" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_flwgp")
 group = "people"
 enemy_groups = Array[String](["aliens"])
@@ -495,10 +496,11 @@ can_move = true
 bullet_scene = ExtResource("2_kxomi")
 controlled_by_player = true
 can_aim = true
+jump_force = 280.0
 
 [node name="LegsSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_sfl5i")
-animation = &"fall"
+animation = &"stand"
 
 [node name="BodySprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_48qig")
@@ -506,13 +508,11 @@ sprite_frames = SubResource("SpriteFrames_48qig")
 [node name="HitboxArea" parent="." instance=ExtResource("3_1owr7")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea"]
-visible = false
 position = Vector2(0, 7)
 shape = SubResource("CapsuleShape2D_xuq8x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, 8)
+position = Vector2(0, 6.5)
 shape = SubResource("RectangleShape2D_7p6mm")
 
 [node name="Camera2D" type="Camera2D" parent="."]

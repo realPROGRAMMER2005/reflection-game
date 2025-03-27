@@ -8,4 +8,4 @@
 [node name="Level" parent="." instance=ExtResource("1_xkndl")]
 
 [node name="SpaceMarine" parent="Level" instance=ExtResource("1_cciph")]
-position = Vector2(102, 39)
+position = Vector2(15, -105)

@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dc4gvq8wst42p" path="res://muzzle/Muzzle.tscn" id="3_32im1"]
 
 [node name="Character" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_uschp")
 movement_type = 1
 

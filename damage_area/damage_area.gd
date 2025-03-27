@@ -4,6 +4,7 @@ class_name DamageArea
 var hitbox_areas_to_damage: Array = []
 var damage_groups: Array[String] = []
 var damaged_hitboxes: Array[HitboxArea] = []
+var hit_world: bool = false
 
 func _on_hitbox_area_entered(hitbox_area: HitboxArea) -> void:
 	for damage_group in damage_groups:
@@ -17,4 +18,10 @@ func _on_hitbox_area_exited(hitbox_area: HitboxArea) -> void:
 			hitbox_areas_to_damage.remove_at(i)
 			break
 
+
+
 	
+
+
+func _on_world_entered(body: Node2D) -> void:
+	hit_world = true

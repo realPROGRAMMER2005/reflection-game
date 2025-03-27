@@ -62,6 +62,9 @@ func handle_damage_area():
 		
 		if not damage_multiple_characters:
 			break
+	
+	if damage_area.hit_world:
+		on_hit_world()
 			
 
 func _physics_process(delta: float) -> void:
@@ -77,3 +80,7 @@ func handle_damage_interval(delta: float):
 
 func can_damage():
 	return damage_interval_timer >= damage_interval
+
+func on_hit_world():
+	if disappear_on_hit_world:
+		queue_free()

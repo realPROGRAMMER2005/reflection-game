@@ -36,7 +36,7 @@ var hitbox_area: HitboxArea
 
 
 @export var jump_force: float = 400.0
-@export var gravity: float = 0
+@export var gravity: float = 900
 var jumps_remaining: int = max_jumps_count
 
 signal get_damage
