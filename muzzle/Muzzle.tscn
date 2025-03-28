@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://be4v6qbrh5exe"]
+
+[ext_resource type="Script" uid="uid://comk3gcpkgivp" path="res://muzzle/muzzle.gd" id="1_fu1ru"]
+
+[node name="Muzzle" type="Node2D"]
+script = ExtResource("1_fu1ru")

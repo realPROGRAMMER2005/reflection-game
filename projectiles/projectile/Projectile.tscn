@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctl01vbot7j6r"]
+
+[ext_resource type="Script" uid="uid://tsrsu521in6t" path="res://projectiles/projectile/projectile.gd" id="1_eeyek"]
+
+[node name="Projectile" type="RigidBody2D"]
+script = ExtResource("1_eeyek")
+ricochet_enabled = null
+ricochets = null
+damage = null
+lifetime = null

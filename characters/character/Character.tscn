@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://i1ew5ge68m43"]
+[gd_scene load_steps=2 format=3 uid="uid://i1ew5ge68m43"]
+
+[ext_resource type="Script" uid="uid://bxcyvptiyudsf" path="res://characters/character/character.gd" id="1_gmdx0"]
 
 [node name="Character" type="CharacterBody2D"]
 self_modulate = Color(1, 1, 34.254, 1)
 scale = Vector2(1.07747, 0.931401)
 collision_layer = 2
+script = ExtResource("1_gmdx0")

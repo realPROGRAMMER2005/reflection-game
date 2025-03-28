@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://djgo24fxoh0kn"]
+
+[ext_resource type="Script" uid="uid://cj4yjc0g54c5a" path="res://projectiles/projectile_visuals/projectile_visuals.gd" id="1_bqbrr"]
+
+[node name="ProjectileVisuals" type="Node2D"]
+script = ExtResource("1_bqbrr")
+
+[node name="Parts" type="Node2D" parent="."]
