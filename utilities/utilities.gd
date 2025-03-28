@@ -1,15 +1,8 @@
 extends Node2D
 
-var level: Level
 
-func _ready() -> void:
-	init_level()
 
-func init_level():
-	find_node_by_class_name(self, Level)
 
-func get_level():
-	return level
 
 
 func load_scene_tree(path: String) -> Variant:

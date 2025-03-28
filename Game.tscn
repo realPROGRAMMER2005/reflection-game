@@ -1,11 +1,18 @@
 [gd_scene load_steps=3 format=3 uid="uid://bgyue8fekrf3k"]
 
-[ext_resource type="PackedScene" uid="uid://cnsa6411vitje" path="res://characters/SpaceMarine.tscn" id="1_cciph"]
-[ext_resource type="PackedScene" uid="uid://ceuifmyb62pre" path="res://level/Level.tscn" id="1_xkndl"]
+[ext_resource type="PackedScene" uid="uid://c3finnevd33r8" path="res://characters/visuals/CometVisuals.tscn" id="1_wbfu4"]
+
+[sub_resource type="Environment" id="Environment_6ubv3"]
+background_mode = 3
+glow_enabled = true
+glow_bloom = 0.3
 
 [node name="Game" type="Node2D"]
 
-[node name="Level" parent="." instance=ExtResource("1_xkndl")]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6ubv3")
 
-[node name="SpaceMarine" parent="Level" instance=ExtResource("1_cciph")]
-position = Vector2(15, -105)
+[node name="CometVisuals" parent="." instance=ExtResource("1_wbfu4")]
+comet_color = Color(0, 0.573, 2.209, 1)
+
+[node name="Camera2D" type="Camera2D" parent="CometVisuals"]

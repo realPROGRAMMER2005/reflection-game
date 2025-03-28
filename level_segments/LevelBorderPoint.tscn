@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bsit2dqjq8owv"]
-
-[ext_resource type="Script" uid="uid://cyy0wwyp0s54s" path="res://level_segments/level_border_point.gd" id="1_dtmdr"]
-
-[node name="LevelBorderPoint" type="Node2D"]
-script = ExtResource("1_dtmdr")

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dc4gvq8wst42p"]
-
-[ext_resource type="Script" uid="uid://dnv53tp13uv7u" path="res://muzzle/muzzle.gd" id="1_fu1ru"]
-
-[node name="Muzzle" type="Node2D"]
-script = ExtResource("1_fu1ru")

@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://ujtm7xej8ph3"]
-
-[ext_resource type="Script" uid="uid://bl4cswqbb4ww6" path="res://bullets/bullet.gd" id="1_68kb2"]
-[ext_resource type="PackedScene" uid="uid://c8pp8xlocrxsx" path="res://damage_area/DamageArea.tscn" id="2_n6yvo"]
-
-[node name="Bullet" type="CharacterBody2D"]
-script = ExtResource("1_68kb2")
-
-[node name="DamageArea" parent="." instance=ExtResource("2_n6yvo")]
