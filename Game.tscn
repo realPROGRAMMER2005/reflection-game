@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bgyue8fekrf3k"]
+[gd_scene load_steps=4 format=3 uid="uid://bgyue8fekrf3k"]
 
-[ext_resource type="PackedScene" uid="uid://c3finnevd33r8" path="res://characters/visuals/CometVisuals.tscn" id="1_wbfu4"]
+[ext_resource type="PackedScene" uid="uid://db1ctkp2qe26d" path="res://characters/player/Player.tscn" id="1_wbfu4"]
+[ext_resource type="PackedScene" uid="uid://dn1ya183qkqf0" path="res://wall/Wall.tscn" id="2_xkndl"]
 
 [sub_resource type="Environment" id="Environment_6ubv3"]
 background_mode = 3
@@ -9,10 +10,9 @@ glow_bloom = 0.3
 
 [node name="Game" type="Node2D"]
 
+[node name="Player" parent="." instance=ExtResource("1_wbfu4")]
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_6ubv3")
 
-[node name="CometVisuals" parent="." instance=ExtResource("1_wbfu4")]
-comet_color = Color(0, 0.573, 2.209, 1)
-
-[node name="Camera2D" type="Camera2D" parent="CometVisuals"]
+[node name="Wall" parent="." instance=ExtResource("2_xkndl")]

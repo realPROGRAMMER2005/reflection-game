@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctl01vbot7j6r"]
+
+[ext_resource type="Script" uid="uid://tsrsu521in6t" path="res://projectiles/projectile_body/projectile_body.gd" id="1_mxwf0"]
+
+[node name="ProjectileBody" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_mxwf0")

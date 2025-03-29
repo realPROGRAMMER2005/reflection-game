@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cn4tx80ylr42k"]
+
+[ext_resource type="Script" uid="uid://tsrsu521in6t" path="res://projectiles/projectile_body/projectile_body.gd" id="1_vsqdp"]
+[ext_resource type="PackedScene" uid="uid://djgo24fxoh0kn" path="res://projectiles/projectile_visuals/ProjectileVisuals.tscn" id="2_kfvs0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mbled"]
+size = Vector2(12, 8)
+
+[node name="ProjectileBody" type="CharacterBody2D"]
+collision_layer = 8
+script = ExtResource("1_vsqdp")
+metadata/_custom_type_script = "uid://tsrsu521in6t"
+
+[node name="ProjectileVisuals" parent="." instance=ExtResource("2_kfvs0")]
+projectile_color = Color(4, 0, 0.165, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_mbled")

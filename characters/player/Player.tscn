@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://db1ctkp2qe26d"]
+
+[ext_resource type="Script" uid="uid://bxcyvptiyudsf" path="res://characters/character/character.gd" id="1_x3487"]
+[ext_resource type="PackedScene" uid="uid://c3finnevd33r8" path="res://characters/visuals/CometVisuals.tscn" id="2_jr8aq"]
+[ext_resource type="PackedScene" uid="uid://b8fxlr2cltim2" path="res://projectiles/player_projectile/PlayerProjectile.tscn" id="2_xoccb"]
+[ext_resource type="PackedScene" uid="uid://cs14g2jxdxlyd" path="res://hitbox_area/HitboxArea.tscn" id="3_4oy4f"]
+[ext_resource type="Script" uid="uid://comk3gcpkgivp" path="res://muzzle/muzzle.gd" id="4_ibj0t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jr8aq"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4oy4f"]
+radius = 4.12311
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_x3487")
+group = "good_comet"
+controlled_by_player = true
+projectile_scene = ExtResource("2_xoccb")
+metadata/_custom_type_script = "uid://bxcyvptiyudsf"
+
+[node name="CometVisuals" parent="." instance=ExtResource("2_jr8aq")]
+comet_color = Color(0.219626, 0.445708, 1, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0)
+shape = SubResource("CircleShape2D_jr8aq")
+
+[node name="HitboxArea" parent="." instance=ExtResource("3_4oy4f")]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea"]
+position = Vector2(2, 0)
+shape = SubResource("CircleShape2D_4oy4f")
+
+[node name="Muzzle" type="Node2D" parent="."]
+script = ExtResource("4_ibj0t")
+metadata/_custom_type_script = "uid://comk3gcpkgivp"

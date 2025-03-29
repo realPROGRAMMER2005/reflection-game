@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bub16d1521dwl"]
+
+[sub_resource type="Curve" id="Curve_jq0rl"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="ImpactParticles" type="CPUParticles2D"]
+emitting = false
+amount = 15
+one_shot = true
+explosiveness = 0.9
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_jq0rl")

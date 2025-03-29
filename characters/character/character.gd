@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Character
 
+@export var group: String = 'bad_comet'
+
 @export var controlled_by_player: bool = false
 
 @export var speed: float = 45
@@ -16,6 +18,7 @@ var fire_rate_timer: float = 0
 
 @onready var hitbox_area: HitboxArea = get_node("HitboxArea")
 @onready var muzzle: Muzzle = get_node("Muzzle")
+@onready var visuals: Node2D = get_node("CometVisuals")
 
 var aiming_angle
 
@@ -35,6 +38,7 @@ func handle_player_controls():
 		
 		velocity = move_direction * speed
 		muzzle.global_rotation = aiming_angle
+		
 	
 		if Input.is_action_pressed("attack"):
 			shoot()
@@ -47,10 +51,12 @@ func _physics_process(delta: float) -> void:
 	
 	
 	move_and_slide()
+	visuals.global_rotation = aiming_angle
 
 
 func _ready() -> void:
 	hitbox_area.connect("hit", on_hit)
+	hitbox_area.group = group
 
 func on_hit(damage):
 	get_damage(damage)
@@ -66,7 +72,12 @@ func die():
 func shoot():
 	if check_can_shoot():
 		fire_rate_timer = 0
+		
 		var projectile_instance: Projectile = projectile_scene.instantiate()
-		owner.add_child(projectile_instance)
-		projectile_instance
-	
+		projectile_instance.group = group
+		projectile_instance.sender = self
+		get_parent().add_child(projectile_instance)
+		projectile_instance.global_position = muzzle.global_position
+		projectile_instance.global_rotation = muzzle.global_rotation
+		projectile_instance.direction = muzzle.global_transform.x.normalized()
+		
