@@ -9,7 +9,7 @@ class_name Character
 
 
 @export var max_health: int = 1
-var current_health: int = max_health
+var current_health: int
 
 @export var projectile_scene: PackedScene
 
@@ -19,6 +19,8 @@ var fire_rate_timer: float = 0
 @onready var hitbox_area: HitboxArea = get_node("HitboxArea")
 @onready var muzzle: Muzzle = get_node("Muzzle")
 @onready var visuals: Node2D = get_node("CometVisuals")
+
+@export var impact_particles_scene: PackedScene = load("res://particles/ImpactParticles.tscn")
 
 var aiming_angle
 
@@ -55,6 +57,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _ready() -> void:
+	current_health = max_health
 	hitbox_area.connect("hit", on_hit)
 	hitbox_area.group = group
 
@@ -67,6 +70,7 @@ func get_damage(damage):
 		die()
 		
 func die():
+	spawn_impact_particles()
 	queue_free()
 
 func shoot():
@@ -81,3 +85,12 @@ func shoot():
 		projectile_instance.global_rotation = muzzle.global_rotation
 		projectile_instance.direction = muzzle.global_transform.x.normalized()
 		
+func spawn_impact_particles(args: Dictionary = {}):
+	var impact_particles_instance: CPUParticles2D = impact_particles_scene.instantiate()
+	for key in args.keys():
+		impact_particles_instance.set(key, args.get(key))
+	get_parent().get_parent().add_child(impact_particles_instance)
+	impact_particles_instance.self_modulate = visuals.comet_color
+	impact_particles_instance.global_position = global_position
+	
+	impact_particles_instance.emitting = true

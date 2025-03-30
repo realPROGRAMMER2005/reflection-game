@@ -3,7 +3,7 @@ class_name Wall
 
 @export var wall_color: Color = Color.DIM_GRAY
 
-@export var impact_partilces_scene: PackedScene
+@export var impact_particles_scene: PackedScene = load("res://particles/ImpactParticles.tscn")
 
 
 
@@ -26,8 +26,10 @@ func _ready() -> void:
 	connect('projectile_collided', on_projectile_collided)
 
 func spawn_impact_particles(pos: Vector2):
-	var impact_particles_instance: CPUParticles2D = impact_partilces_scene.instantiate()
+	var impact_particles_instance: CPUParticles2D = impact_particles_scene.instantiate()
 	impact_particles_instance.self_modulate = wall_color
+	impact_particles_instance.amount = 10
+	impact_particles_instance.initial_velocity_max = 15
 	get_parent().add_child(impact_particles_instance)
 	impact_particles_instance.global_position = pos
 	impact_particles_instance.emitting = true

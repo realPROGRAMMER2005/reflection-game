@@ -1,11 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://dn1ya183qkqf0"]
+[gd_scene load_steps=2 format=3 uid="uid://dn1ya183qkqf0"]
 
 [ext_resource type="Script" uid="uid://d0ext43c1hnl6" path="res://wall/wall.gd" id="1_075dv"]
-[ext_resource type="PackedScene" uid="uid://bub16d1521dwl" path="res://particles/ImpactParticles.tscn" id="2_3in3r"]
 
 [node name="Wall" type="StaticBody2D"]
 script = ExtResource("1_075dv")
-impact_partilces_scene = ExtResource("2_3in3r")
+wall_color = Color(0.666126, 0.705688, 0.924296, 1)
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(69, 44, 51, 103, 108, 132, 137, 83)

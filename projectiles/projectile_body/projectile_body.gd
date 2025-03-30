@@ -50,15 +50,19 @@ func _physics_process(delta: float) -> void:
 		if ricochet_enabled:
 			if ricochet_enabled and ricochet_count > 0:
 				direction = direction.bounce(collision.get_normal())
-				visuals.spawn_destroy_particles({'amount': 8, 'initial_velocity_max': 50})
+				visuals.spawn_impact_particles({'amount': 8, 'initial_velocity_max': 50})
 				ricochet_count -= 1
+				ricocheted = true
+				
 				visuals.global_rotation = direction.angle()
 		else:
 			die()
 
 func on_hitbox_area_collided():
-	die()
+	direction = -direction
+	visuals.spawn_impact_particles({'amount': 8, 'initial_velocity_max': 50})
+	
 
 func die():
-	visuals.spawn_destroy_particles()
+	visuals.spawn_impact_particles()
 	queue_free()
