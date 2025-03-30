@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgyue8fekrf3k"]
+[gd_scene load_steps=3 format=3 uid="uid://bgyue8fekrf3k"]
 
-[ext_resource type="PackedScene" uid="uid://db1ctkp2qe26d" path="res://characters/player/Player.tscn" id="2_xkndl"]
 [ext_resource type="PackedScene" uid="uid://c80w1bxgbasrq" path="res://level/Level.tscn" id="3_u44n3"]
 
 [sub_resource type="Environment" id="Environment_6ubv3"]
@@ -14,6 +13,3 @@ glow_bloom = 0.3
 environment = SubResource("Environment_6ubv3")
 
 [node name="Level" parent="." instance=ExtResource("3_u44n3")]
-
-[node name="Player" parent="Level" instance=ExtResource("2_xkndl")]
-position = Vector2(222, 157)

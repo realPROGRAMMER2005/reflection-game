@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3oupnll700xc"]
+
+[ext_resource type="Script" uid="uid://bxcyvptiyudsf" path="res://characters/character/character.gd" id="1_7rb3u"]
+
+[node name="BadCometMelee" type="CharacterBody2D"]
+script = ExtResource("1_7rb3u")
+metadata/_custom_type_script = "uid://bxcyvptiyudsf"

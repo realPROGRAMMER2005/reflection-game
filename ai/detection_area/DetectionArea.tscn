@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjw8tag8oqn6g"]
+
+[ext_resource type="Script" uid="uid://chq3jvkqe3vgl" path="res://ai/detection_area/detection_area.gd" id="1_00eqn"]
+
+[node name="DetectionArea" type="Area2D"]
+script = ExtResource("1_00eqn")
