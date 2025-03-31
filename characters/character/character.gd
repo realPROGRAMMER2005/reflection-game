@@ -2,43 +2,67 @@ extends CharacterBody2D
 class_name Character
 
 @export var group: String = 'bad_comet'
-
 @export var controlled_by_player: bool = false
-
 @export var speed: float = 45
-
 @export var type_variation: bool = false
-
-
 @export var max_health: int = 1
 var current_health: int
-
 @export var projectile_scene: PackedScene
-
 @export var fire_rate: float = 0.3
 var fire_rate_timer: float = 0
 
 @onready var detection_area: DetectionArea = get_node("DetectionArea")
-
 @onready var hitbox_area: HitboxArea = get_node("HitboxArea")
 @onready var muzzle: Muzzle = get_node("Muzzle")
 @onready var visuals: Node2D = get_node("CometVisuals")
+@onready var navigation_agent: NavigationAgent2D = get_node("NavigationAgent2D")
+@onready var raycast: RayCast2D = get_node("RayCast2D")
 
 @export var impact_particles_scene: PackedScene = load("res://particles/ImpactParticles.tscn")
 
-var aiming_angle
-
-enum AIStates {STAY, PATROL, FOLLOW, ATTACK}
-var current_ai_state: AIStates = AIStates.STAY
+var aiming_angle: float = 0
 var target: Character
+
+enum AIStates {STAY, PATROL, FOLLOW}
+var current_ai_state: AIStates = AIStates.STAY
+
+func _ready() -> void:
+	if type_variation:
+		var size_scale = randf_range(0.6, 3)
+		max_health = max_health * size_scale ** 2
+		speed = speed / size_scale
+		scale = Vector2(size_scale, size_scale)
+	
+	current_health = max_health
+	hitbox_area.connect("hit", on_hit)
+	hitbox_area.group = group
+	detection_area.connect('enemy_entered', on_enemy_entered_detection_area)
+	navigation_agent.path_desired_distance = 10.0
+	navigation_agent.target_desired_distance = 50.0
+	
+	# Настройка RayCast2D
+	if not raycast:
+		raycast = RayCast2D.new()
+		add_child(raycast)
+		raycast.name = "RayCast2D"
+	raycast.enabled = true
+	raycast.collide_with_areas = false
+	raycast.collide_with_bodies = true
+	raycast.collision_mask = 1  # Установите нужный слой для стен
+
+func _physics_process(delta: float) -> void:
+	handle_fire_rate(delta)
+	handle_player_controls()
+	handle_ai()
+	move_and_slide()
+	visuals.global_rotation = aiming_angle
 
 func check_can_shoot():
 	return fire_rate_timer >= fire_rate
 
-
 func handle_fire_rate(delta):
 	fire_rate_timer += delta
-	
+
 func handle_player_controls():
 	if controlled_by_player: 
 		var mouse_pos = get_global_mouse_position()
@@ -49,30 +73,55 @@ func handle_player_controls():
 		velocity = move_direction * speed
 		muzzle.global_rotation = aiming_angle
 		
-	
 		if Input.is_action_pressed("attack"):
 			shoot()
-	
-func _physics_process(delta: float) -> void:
-	handle_fire_rate(delta)
-	handle_player_controls()
-	handle_ai()
-	move_and_slide()
-	visuals.global_rotation = aiming_angle
 
+func handle_ai():
+	if not controlled_by_player:
+		if current_ai_state == AIStates.STAY:
+			handle_ai_stay()
+		elif current_ai_state == AIStates.PATROL:
+			handle_ai_patrol()
+		elif current_ai_state == AIStates.FOLLOW:
+			handle_ai_follow()
 
-func _ready() -> void:
-	if type_variation:
-		var size_scale = randf_range(0.6, 5)
-		max_health = max_health * size_scale
-		speed = speed / size_scale
+func handle_ai_stay():
+	velocity = Vector2.ZERO
+
+func handle_ai_patrol():
+	pass
+
+func handle_ai_follow():
+	if target:
+		# Устанавливаем цель для NavigationAgent2D
+		navigation_agent.set_target_position(target.global_position)
 		
-		scale = Vector2(size_scale, size_scale)
+		# Получаем следующую точку пути
+		var next_path_position = navigation_agent.get_next_path_position()
+		var direction = (next_path_position - global_position).normalized()
 		
-	current_health = max_health
-	hitbox_area.connect("hit", on_hit)
-	hitbox_area.group = group
-	detection_area.connect('enemy_entered', on_enemy_entered_detection_area)
+		# Двигаемся к цели
+		velocity = direction * speed
+		
+		# Направляем дуло и RayCast2D на игрока
+		var direction_to_target = (target.global_position - global_position).normalized()
+		aiming_angle = direction_to_target.angle()  # Угол напрямую из направления
+		muzzle.global_rotation = aiming_angle
+		
+		# Настройка RayCast2D
+		raycast.target_position = to_local(target.global_position)  # Локальные координаты цели
+		raycast.force_raycast_update()  # Принудительное обновление луча
+		
+		# Стреляем, если нет препятствий
+		if not raycast.is_colliding():
+			shoot()
+		# Для отладки
+		print("Raycast target: ", raycast.target_position, " Colliding: ", raycast.is_colliding())
+
+func on_enemy_entered_detection_area(enemy: Character):
+	if enemy.controlled_by_player:
+		target = enemy
+		current_ai_state = AIStates.FOLLOW
 
 func on_hit(damage):
 	get_damage(damage)
@@ -81,7 +130,7 @@ func get_damage(damage):
 	current_health -= damage
 	if current_health <= 0:
 		die()
-		
+
 func die():
 	spawn_impact_particles()
 	queue_free()
@@ -97,7 +146,7 @@ func shoot():
 		projectile_instance.global_position = muzzle.global_position
 		projectile_instance.global_rotation = muzzle.global_rotation
 		projectile_instance.direction = muzzle.global_transform.x.normalized()
-		
+
 func spawn_impact_particles(args: Dictionary = {}):
 	var impact_particles_instance: CPUParticles2D = impact_particles_scene.instantiate()
 	for key in args.keys():
@@ -107,32 +156,3 @@ func spawn_impact_particles(args: Dictionary = {}):
 	impact_particles_instance.global_position = global_position
 	
 	impact_particles_instance.emitting = true
-
-func handle_ai():
-	if not controlled_by_player:
-		if current_ai_state == AIStates.STAY:
-			handle_ai_stay()
-		elif current_ai_state == AIStates.PATROL:
-			handle_ai_patrol()
-		elif current_ai_state == AIStates.FOLLOW:
-			handle_ai_follow()
-		elif current_ai_state == AIStates.ATTACK:
-			handle_ai_attack()
-			
-
-
-func on_enemy_entered_detection_area(enemy: Character):
-	current_ai_state = AIStates.FOLLOW
-
-func handle_ai_stay():
-	pass
-
-func handle_ai_patrol():
-	pass
-
-func handle_ai_follow():
-	if target:
-		pass
-
-func handle_ai_attack():
-	pass

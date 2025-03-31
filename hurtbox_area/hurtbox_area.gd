@@ -2,7 +2,7 @@ extends Area2D
 class_name HurtboxArea
 
 signal hitbox_area_entered
-signal hurtbox_area_exited
+signal hitbox_area_exited
 
 var hitboxes_in_area: Array[HitboxArea]
 

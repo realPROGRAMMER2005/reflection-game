@@ -8,8 +8,10 @@ size = Vector2(12, 8)
 
 [node name="ProjectileBody" type="CharacterBody2D"]
 collision_layer = 8
+collision_mask = 5
 script = ExtResource("1_vsqdp")
-speed = 125
+ricochet_enabled = true
+speed = 90
 lifetime = 2.5
 metadata/_custom_type_script = "uid://tsrsu521in6t"
 

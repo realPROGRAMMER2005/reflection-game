@@ -12,6 +12,8 @@ var border_width = 1
 @export var max_room_size: int = 6
 @export var room_count: int = 15
 @export var corridor_width: int = 2
+
+var character: Array
 var room_wall_density: float = 0.9
 var corridor_wall_density: float = 0.1
 

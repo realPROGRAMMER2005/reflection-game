@@ -55,3 +55,8 @@ visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_nxscl")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
+
+[node name="RayCast2D" type="RayCast2D" parent="."]

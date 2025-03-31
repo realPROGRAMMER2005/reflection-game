@@ -5,6 +5,16 @@
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_xnnxx")
+wall_scene = null
+player_scene = null
+irregularity_strength = null
+width = null
+height = null
+irregularity_detail = null
+min_room_size = null
+max_room_size = null
+room_count = null
+corridor_width = null
 
 [node name="BadComet" parent="." instance=ExtResource("2_0fxik")]
 position = Vector2(309, 245)

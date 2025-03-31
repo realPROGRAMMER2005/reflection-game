@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d3oupnll700xc"]
+[gd_scene load_steps=13 format=3 uid="uid://d3oupnll700xc"]
 
 [ext_resource type="Script" uid="uid://bxcyvptiyudsf" path="res://characters/character/character.gd" id="1_f3i1s"]
 [ext_resource type="PackedScene" uid="uid://d02yotxpxw6mp" path="res://characters/visuals/BadCometVisualsA.tscn" id="2_7iy16"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bx6keleoo2sdi" path="res://particles/ImpactParticles.tscn" id="3_0v1jp"]
 [ext_resource type="Script" uid="uid://05dpj2k5dxb8" path="res://hurtbox_area/hurtbox_area.gd" id="3_clpdb"]
 [ext_resource type="PackedScene" uid="uid://cjw8tag8oqn6g" path="res://ai/detection_area/DetectionArea.tscn" id="4_xqlys"]
+[ext_resource type="PackedScene" uid="uid://cs14g2jxdxlyd" path="res://hitbox_area/HitboxArea.tscn" id="7_emusj"]
+[ext_resource type="Script" uid="uid://comk3gcpkgivp" path="res://muzzle/muzzle.gd" id="8_vu54l"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7iy16"]
 radius = 4.0
@@ -14,14 +16,18 @@ radius = 4.0
 radius = 4.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yyvag"]
-radius = 64.195
+radius = 82.0244
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vu54l"]
+radius = 4.0
 
 [node name="BadComet" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_f3i1s")
-speed = 60.0
+speed = 90.0
+type_variation = true
 projectile_scene = ExtResource("2_yyvag")
-fire_rate = 0.8
+fire_rate = 1.2
 impact_particles_scene = ExtResource("3_0v1jp")
 metadata/_custom_type_script = "uid://bxcyvptiyudsf"
 
@@ -44,7 +50,24 @@ position = Vector2(2, 0)
 shape = SubResource("CircleShape2D_xqlys")
 
 [node name="DetectionArea" parent="." instance=ExtResource("4_xqlys")]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+scale = Vector2(1.00579, 1.02145)
 shape = SubResource("CircleShape2D_yyvag")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
+
+[node name="HitboxArea" parent="." instance=ExtResource("7_emusj")]
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea"]
+position = Vector2(2, 0)
+shape = SubResource("CircleShape2D_vu54l")
+
+[node name="Muzzle" type="Node2D" parent="."]
+script = ExtResource("8_vu54l")
+metadata/_custom_type_script = "uid://comk3gcpkgivp"
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(35, 0)

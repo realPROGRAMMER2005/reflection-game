@@ -55,11 +55,14 @@ func _physics_process(delta: float) -> void:
 				ricocheted = true
 				
 				visuals.global_rotation = direction.angle()
+			else:
+				die()
 		else:
 			die()
 
 func on_hitbox_area_collided():
 	direction = -direction
+	visuals.global_rotation = direction.angle()
 	visuals.spawn_impact_particles({'amount': 8, 'initial_velocity_max': 50})
 	
 
