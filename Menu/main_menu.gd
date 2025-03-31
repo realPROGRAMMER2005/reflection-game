@@ -1,26 +1,26 @@
 extends CanvasLayer
 
-# 0 - 100
-var sfx_volume: float = 100
-var music_volume: float = 100
-
 @onready var options_menu: Control = $OptionsMenu
 @onready var help_menu: Control = $HelpMenu
 @onready var block_main_menu: Control = $Block
 @onready var sfx_slider: Slider = $OptionsMenu/MarginContainer/GridContainer/SFXSlider
 @onready var music_slider: Slider = $OptionsMenu/MarginContainer/GridContainer/MusicSlider
+@onready var music_player: AudioStreamPlayer = $"../AudioStreamPlayer"
+var level: PackedScene = preload("res://level/Level.tscn")
+
+var bgm_index: int = AudioServer.get_bus_index("BGM")
+var sfx_index: int = AudioServer.get_bus_index("Master") 
 
 
 func _ready():
-	sfx_slider.value = sfx_volume
-	music_slider.value = music_volume
-	#music_player.volume_db = linear_to_db(music_volume / 100)
-	#sfx_player.volume_db = linear_to_db(sfx_volume / 100)  
+	sfx_slider.value = Settings.sfx_volume
+	music_slider.value = Settings.music_volume
 
 
 func _on_start_game_btn_pressed() -> void:
 	print("The game has started!")
-	# TODO: start the project
+	add_sibling(level.instantiate())
+	queue_free()
 
 
 func _on_options_btn_pressed() -> void:
@@ -44,12 +44,11 @@ func _on_help_exit_pressed() -> void:
 
 
 func _on_sfx_slider_value_changed(value: float) -> void:
-	sfx_volume = value
-	#sfx_player.volume_db = linear_to_db(sfx_volume / 100)
-	# TODO: change sfx volume
-
+	Settings.sfx_volume = value
+	var db: float = linear_to_db(Settings.music_volume / 100)
+	AudioServer.set_bus_volume_db(sfx_index, db)
 
 func _on_music_slider_value_changed(value: float) -> void:
-	music_volume = value
-	#music_player.volume_db = linear_to_db(music_volume / 100)
-	# TODO: change music volume
+	Settings.music_volume = value
+	var db: float = linear_to_db(Settings.music_volume / 100)
+	AudioServer.set_bus_volume_db(bgm_index, db)
