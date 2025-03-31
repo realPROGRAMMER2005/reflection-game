@@ -1,8 +1,8 @@
 extends Node2D
 class_name Level
 
-@export var wall_scene: = preload("res://wall/Wall.tscn")
-@export var player_scene: = preload("res://characters/player/Player.tscn")
+@export var wall_scene = preload("res://wall/Wall.tscn")
+@export var player_scene = preload("res://characters/player/Player.tscn")
 @export var irregularity_strength: float = 0.2
 @export var width = 30
 @export var height = 30
@@ -18,18 +18,21 @@ var corridor_wall_density: float = 0.1
 const CELL_SIZE = 32
 var player_spawn_room: Rect2i
 
+func _ready():
+	randomize()
+	var level = generate_level(width, height, border_width)
+	create_walls_from_level(level)
+	create_navigation_regions(level)
+	spawn_player()
+
 func generate_level(width: int, height: int, border_width: int) -> Array:
 	var level = []
 	for y in range(height):
 		var row = []
 		for x in range(width):
-			if y < border_width or y >= height - border_width or x < border_width or x >= width - border_width:
-				row.append(1)
-			else:
-				row.append(1)
+			row.append(1)
 		level.append(row)
 	
-	# Генерация комнат
 	var rooms = []
 	for i in range(room_count):
 		var room_width = randi_range(min_room_size, max_room_size)
@@ -47,7 +50,6 @@ func generate_level(width: int, height: int, border_width: int) -> Array:
 		
 		if not overlaps:
 			rooms.append(new_room)
-			# Первая комната (для игрока) будет полностью пустой
 			if rooms.size() == 1:
 				create_empty_room(level, new_room)
 			else:
@@ -59,25 +61,19 @@ func generate_level(width: int, height: int, border_width: int) -> Array:
 	for i in range(1, rooms.size()):
 		var prev_room = rooms[i-1]
 		var current_room = rooms[i]
-
 		var prev_center = prev_room.position + prev_room.size / 2
 		var current_center = current_room.position + current_room.size / 2
 		
 		if randf() > 0.5:
-
-			create_corridor(level, 
-						  Vector2i(prev_center.x, prev_center.y),
-						  Vector2i(prev_center.x, current_center.y))
-			create_corridor(level,
-						  Vector2i(prev_center.x, current_center.y),
-						  Vector2i(current_center.x, current_center.y))
+			create_corridor(level, Vector2i(prev_center.x, prev_center.y),
+								  Vector2i(prev_center.x, current_center.y))
+			create_corridor(level, Vector2i(prev_center.x, current_center.y),
+								  Vector2i(current_center.x, current_center.y))
 		else:
-			create_corridor(level,
-						  Vector2i(prev_center.x, prev_center.y),
-						  Vector2i(current_center.x, prev_center.y))
-			create_corridor(level,
-						  Vector2i(current_center.x, prev_center.y),
-						  Vector2i(current_center.x, current_center.y))
+			create_corridor(level, Vector2i(prev_center.x, prev_center.y),
+								  Vector2i(current_center.x, prev_center.y))
+			create_corridor(level, Vector2i(current_center.x, prev_center.y),
+								  Vector2i(current_center.x, current_center.y))
 	
 	return level
 
@@ -143,6 +139,31 @@ func create_wall_at_position(x: int, y: int):
 	if wall.has_node("CollisionPolygon2D"):
 		wall.get_node("CollisionPolygon2D").polygon = polygon
 
+func create_navigation_regions(level: Array):
+	for y in range(level.size()):
+		for x in range(level[y].size()):
+			if level[y][x] == 0:  # Если клетка пустая (не стена)
+				var nav_region = NavigationRegion2D.new()
+				var nav_poly = NavigationPolygon.new()
+				
+				# Создаем квадратный полигон размером с клетку
+				var half_size = CELL_SIZE / 2
+				var vertices = PackedVector2Array([
+					Vector2(-half_size, -half_size),
+					Vector2(half_size, -half_size),
+					Vector2(half_size, half_size),
+					Vector2(-half_size, half_size)
+				])
+				
+				nav_poly.add_outline(vertices)
+				nav_poly.make_polygons_from_outlines()
+				
+				nav_region.navigation_polygon = nav_poly
+				add_child(nav_region)
+				
+				# Позиционируем регион в центре клетки
+				nav_region.position = Vector2(x * CELL_SIZE, y * CELL_SIZE)
+
 func spawn_player():
 	if player_spawn_room:
 		var center_x = player_spawn_room.position.x + player_spawn_room.size.x / 2
@@ -183,9 +204,3 @@ func generate_irregular_polygon(x: int, y: int) -> PackedVector2Array:
 			irregular_polygon.append(point)
 	
 	return irregular_polygon
-
-func _ready():
-	randomize()
-	var level = generate_level(width, height, border_width)
-	create_walls_from_level(level)
-	spawn_player()

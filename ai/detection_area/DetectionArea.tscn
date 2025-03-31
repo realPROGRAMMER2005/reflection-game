@@ -3,4 +3,8 @@
 [ext_resource type="Script" uid="uid://chq3jvkqe3vgl" path="res://ai/detection_area/detection_area.gd" id="1_00eqn"]
 
 [node name="DetectionArea" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
 script = ExtResource("1_00eqn")
+
+[connection signal="body_entered" from="." to="." method="_on_character_entered"]

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://c80w1bxgbasrq"]
+
+[ext_resource type="Script" uid="uid://esfqnjeq66et" path="res://level/level.gd" id="1_xnnxx"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_xnnxx")
+wall_scene = null
+player_scene = null
+irregularity_strength = null
+width = null
+height = null
+irregularity_detail = null
+min_room_size = null
+max_room_size = null
+room_count = null
+corridor_width = null

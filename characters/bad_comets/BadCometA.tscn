@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://d3oupnll700xc"]
+
+[ext_resource type="Script" uid="uid://bxcyvptiyudsf" path="res://characters/character/character.gd" id="1_f3i1s"]
+[ext_resource type="PackedScene" uid="uid://d02yotxpxw6mp" path="res://characters/visuals/BadCometVisualsA.tscn" id="2_7iy16"]
+[ext_resource type="PackedScene" uid="uid://cn4tx80ylr42k" path="res://projectiles/bad_comet_projectile/BadCometProjectile.tscn" id="2_yyvag"]
+[ext_resource type="PackedScene" uid="uid://bx6keleoo2sdi" path="res://particles/ImpactParticles.tscn" id="3_0v1jp"]
+[ext_resource type="Script" uid="uid://05dpj2k5dxb8" path="res://hurtbox_area/hurtbox_area.gd" id="3_clpdb"]
+[ext_resource type="PackedScene" uid="uid://cjw8tag8oqn6g" path="res://ai/detection_area/DetectionArea.tscn" id="4_xqlys"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7iy16"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xqlys"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yyvag"]
+radius = 64.195
+
+[node name="BadComet" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_f3i1s")
+speed = 60.0
+projectile_scene = ExtResource("2_yyvag")
+fire_rate = 0.8
+impact_particles_scene = ExtResource("3_0v1jp")
+metadata/_custom_type_script = "uid://bxcyvptiyudsf"
+
+[node name="CometVisuals" parent="." instance=ExtResource("2_7iy16")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(2, 0)
+shape = SubResource("CircleShape2D_7iy16")
+
+[node name="HurtboxArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 16
+collision_mask = 4
+script = ExtResource("3_clpdb")
+metadata/_custom_type_script = "uid://05dpj2k5dxb8"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxArea"]
+position = Vector2(2, 0)
+shape = SubResource("CircleShape2D_xqlys")
+
+[node name="DetectionArea" parent="." instance=ExtResource("4_xqlys")]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_yyvag")

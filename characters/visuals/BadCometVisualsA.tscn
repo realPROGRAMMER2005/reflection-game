@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://d02yotxpxw6mp"]
+
+[ext_resource type="PackedScene" uid="uid://c3finnevd33r8" path="res://characters/visuals/CometVisuals.tscn" id="1_y4106"]
+
+[node name="CometVisuals" instance=ExtResource("1_y4106")]
+comet_color = Color(0.823848, 0, 0.162961, 1)
+
+[node name="Tail" parent="Tails" index="0"]
+self_modulate = Color(0.823848, 0, 0.162961, 1)
+
+[node name="BodyPart" parent="BobyParts" index="0"]
+self_modulate = Color(0.823848, 0, 0.162961, 1)
+
+[node name="Eye" parent="Eyes" index="0"]
+polygon = PackedVector2Array(1, 0, 5, 0, 4.64052, -1.07365, 3, -1, 2, -1)
+
+[node name="Eye2" parent="Eyes" index="1"]
+polygon = PackedVector2Array(2, 0, 4.64052, 0, 5, -1, 0.928104, -1.07365)

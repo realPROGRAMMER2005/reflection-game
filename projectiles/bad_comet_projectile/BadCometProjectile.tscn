@@ -9,6 +9,8 @@ size = Vector2(12, 8)
 [node name="ProjectileBody" type="CharacterBody2D"]
 collision_layer = 8
 script = ExtResource("1_vsqdp")
+speed = 125
+lifetime = 2.5
 metadata/_custom_type_script = "uid://tsrsu521in6t"
 
 [node name="ProjectileVisuals" parent="." instance=ExtResource("2_kfvs0")]
