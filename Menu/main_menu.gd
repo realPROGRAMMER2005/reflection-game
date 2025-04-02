@@ -7,6 +7,7 @@ extends CanvasLayer
 @onready var music_slider: Slider = $OptionsMenu/MarginContainer/GridContainer/MusicSlider
 @onready var music_player: AudioStreamPlayer = $"../AudioStreamPlayer"
 var level: PackedScene = preload("res://level/Level.tscn")
+var hud: PackedScene = preload("res://HUD/hud.tscn")
 
 var bgm_index: int = AudioServer.get_bus_index("BGM")
 var sfx_index: int = AudioServer.get_bus_index("Master") 
@@ -19,6 +20,7 @@ func _ready():
 
 func _on_start_game_btn_pressed() -> void:
 	print("The game has started!")
+	add_sibling(hud.instantiate())
 	add_sibling(level.instantiate())
 	queue_free()
 

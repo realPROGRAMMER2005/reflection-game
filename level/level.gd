@@ -25,6 +25,7 @@ var player: Character
 const CELL_SIZE = 32
 var player_spawn_room: Rect2i
 
+
 func setup_camera():
 	camera = camera_scene.instantiate()
 	camera.target = player
@@ -42,6 +43,9 @@ func clear_level():
 	for child in get_children():
 		if child != player:
 			child.queue_free()
+	
+	Settings.enemies_count = 0
+	Settings.kills = 0
 
 func adjust_level_size():
 	width = 30 + level_difficulty * 5
@@ -217,9 +221,11 @@ func spawn_residents(level: Array):
 	
 	var resident_count = min(level_difficulty * 10, spawn_rooms.size())
 	spawn_rooms.shuffle()
-	
+	Settings.enemies_count = resident_count
 	for i in range(resident_count):
 		if i >= spawn_rooms.size():
+			Settings.enemies_count = i
+			print("Enemies count: " + str(i))
 			break
 			
 		var pos = spawn_rooms[i]
