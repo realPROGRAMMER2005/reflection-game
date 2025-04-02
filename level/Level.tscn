@@ -1,61 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://c80w1bxgbasrq"]
+[gd_scene load_steps=2 format=3 uid="uid://c80w1bxgbasrq"]
 
 [ext_resource type="Script" uid="uid://esfqnjeq66et" path="res://level/level.gd" id="1_xnnxx"]
-[ext_resource type="PackedScene" uid="uid://d3oupnll700xc" path="res://characters/bad_comets/BadCometA.tscn" id="2_0fxik"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_xnnxx")
-
-[node name="BadComet" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(309, 245)
-
-[node name="BadComet2" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(309, 245)
-
-[node name="BadComet3" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(341, 274)
-
-[node name="BadComet4" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(281, 221)
-
-[node name="BadComet5" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(288, 290)
-
-[node name="BadComet6" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(374, 235)
-
-[node name="BadComet7" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(713, 468)
-
-[node name="BadComet8" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(713, 468)
-
-[node name="BadComet9" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(745, 497)
-
-[node name="BadComet10" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(685, 444)
-
-[node name="BadComet11" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(692, 513)
-
-[node name="BadComet12" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(778, 458)
-
-[node name="BadComet13" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(695, 263)
-
-[node name="BadComet14" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(695, 263)
-
-[node name="BadComet15" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(727, 292)
-
-[node name="BadComet16" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(667, 239)
-
-[node name="BadComet17" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(674, 308)
-
-[node name="BadComet18" parent="." instance=ExtResource("2_0fxik")]
-position = Vector2(760, 253)

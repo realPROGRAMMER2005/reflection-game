@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 	if collision:
 		var collider = collision.get_collider()
 		if collider is Wall:
-			collider.emit_signal('projectile_collided', global_position)
+			collider.emit_signal('projectile_collided', global_position, damage)
 		if ricochet_enabled:
 			if ricochet_enabled and ricochet_count > 0:
 				direction = direction.bounce(collision.get_normal())
@@ -68,4 +68,5 @@ func on_hitbox_area_collided():
 
 func die():
 	visuals.spawn_impact_particles()
+	EventBus.shake(0.4, global_position)
 	queue_free()

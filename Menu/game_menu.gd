@@ -6,7 +6,7 @@ extends CanvasLayer
 @onready var sfx_slider: Slider = $OptionsMenu/MarginContainer/GridContainer/SFXSlider
 @onready var music_slider: Slider = $OptionsMenu/MarginContainer/GridContainer/MusicSlider
 @onready var music_player: AudioStreamPlayer = $"../AudioStreamPlayer"
-var level: PackedScene = preload("res://level/Level.tscn")
+
 
 var bgm_index: int = AudioServer.get_bus_index("BGM")
 var sfx_index: int = AudioServer.get_bus_index("Master") 
@@ -20,8 +20,12 @@ func _ready():
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("invoke_menu"):
 		if get_node("../Level"):
-			visible = true
-			get_tree().paused = true
+			visible = !visible
+			get_tree().paused = !get_tree().paused
+			options_menu.visible = false
+			help_menu.visible = false
+			block_main_menu.visible = false
+			
 
 
 func _on_continue_pressed() -> void:
@@ -37,6 +41,7 @@ func _on_start_game_btn_pressed() -> void:
 
 
 func _on_retry_pressed() -> void:
+	$"../Level".restart_game()
 	visible = false
 	get_tree().paused = false
 
