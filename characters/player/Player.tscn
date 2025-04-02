@@ -22,15 +22,13 @@ collision_layer = 2
 script = ExtResource("1_x3487")
 group = "good_comet"
 controlled_by_player = true
+speed = 130.0
 projectile_scene = ExtResource("2_xoccb")
 impact_particles_scene = ExtResource("3_nxscl")
 metadata/_custom_type_script = "uid://bxcyvptiyudsf"
 
 [node name="CometVisuals" parent="." instance=ExtResource("2_jr8aq")]
 comet_color = Color(0.226, 0.451, 4, 1)
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position_smoothing_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

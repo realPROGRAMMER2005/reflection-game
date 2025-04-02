@@ -29,7 +29,7 @@ var current_ai_state: AIStates = AIStates.STAY
 func _ready() -> void:
 	if type_variation:
 		var size_scale = randf_range(0.6, 3)
-		max_health = max_health * size_scale ** 2
+		max_health = max_health * size_scale
 		speed = speed / size_scale
 		scale = Vector2(size_scale, size_scale)
 	
@@ -103,20 +103,17 @@ func handle_ai_follow():
 		# Двигаемся к цели
 		velocity = direction * speed
 		
-		# Направляем дуло и RayCast2D на игрока
 		var direction_to_target = (target.global_position - global_position).normalized()
-		aiming_angle = direction_to_target.angle()  # Угол напрямую из направления
+		aiming_angle = direction_to_target.angle()
 		muzzle.global_rotation = aiming_angle
 		
-		# Настройка RayCast2D
-		raycast.target_position = to_local(target.global_position)  # Локальные координаты цели
-		raycast.force_raycast_update()  # Принудительное обновление луча
+		raycast.target_position = to_local(target.global_position)
+		raycast.force_raycast_update()  
 		
-		# Стреляем, если нет препятствий
 		if not raycast.is_colliding():
 			shoot()
-		# Для отладки
-		print("Raycast target: ", raycast.target_position, " Colliding: ", raycast.is_colliding())
+
+
 
 func on_enemy_entered_detection_area(enemy: Character):
 	if enemy.controlled_by_player:
@@ -133,11 +130,14 @@ func get_damage(damage):
 
 func die():
 	spawn_impact_particles()
+	EventBus.shake(5, global_position)
 	queue_free()
 
 func shoot():
 	if check_can_shoot():
 		fire_rate_timer = 0
+		
+		EventBus.shake(0.5, global_position)
 		
 		var projectile_instance: Projectile = projectile_scene.instantiate()
 		projectile_instance.group = group
@@ -146,6 +146,7 @@ func shoot():
 		projectile_instance.global_position = muzzle.global_position
 		projectile_instance.global_rotation = muzzle.global_rotation
 		projectile_instance.direction = muzzle.global_transform.x.normalized()
+		
 
 func spawn_impact_particles(args: Dictionary = {}):
 	var impact_particles_instance: CPUParticles2D = impact_particles_scene.instantiate()

@@ -3,6 +3,10 @@ class_name Wall
 
 @export var wall_color: Color = Color.DIM_GRAY
 
+@export var max_health: int = 3
+var current_health: int
+@export var destructable: bool = true
+
 @export var impact_particles_scene: PackedScene = load("res://particles/ImpactParticles.tscn")
 
 
@@ -21,19 +25,40 @@ func apply_collision_polygon_to_match_polygon():
 		collision_polygon.polygon = polygon.polygon
 
 func _ready() -> void:
+	current_health = max_health
 	apply_color()
 	apply_collision_polygon_to_match_polygon()
 	connect('projectile_collided', on_projectile_collided)
 
-func spawn_impact_particles(pos: Vector2):
+func spawn_impact_particles(pos: Vector2, args = {}):
 	var impact_particles_instance: CPUParticles2D = impact_particles_scene.instantiate()
 	impact_particles_instance.self_modulate = wall_color
 	impact_particles_instance.amount = 10
-	impact_particles_instance.initial_velocity_max = 15
+	
+	for key in args.keys():
+		impact_particles_instance.set(key, args.get(key))
+	
+	
 	get_parent().add_child(impact_particles_instance)
 	impact_particles_instance.global_position = pos
 	impact_particles_instance.emitting = true
 
 
-func on_projectile_collided(pos: Vector2):
+
+
+func on_projectile_collided(pos: Vector2, damage: int):
 	spawn_impact_particles(pos)
+	get_damage(damage)
+
+func get_damage(damage):
+	
+	if destructable:
+		current_health -= damage
+		if current_health <= 0:
+			die()
+
+
+func die():
+	spawn_impact_particles(global_position, {"amount": 100})
+	EventBus.shake(0.8, global_position)
+	queue_free()

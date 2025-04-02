@@ -3,6 +3,7 @@ class_name Level
 
 @export var wall_scene = preload("res://wall/Wall.tscn")
 @export var player_scene = preload("res://characters/player/Player.tscn")
+@export var camera_scene: PackedScene = preload("res://camera/Camera.tscn")
 @export var irregularity_strength: float = 0.2
 @export var width = 30
 @export var height = 30
@@ -10,22 +11,50 @@ var border_width = 1
 @export var irregularity_detail: int = 1
 @export var min_room_size: int = 4
 @export var max_room_size: int = 6
-@export var room_count: int = 15
+@export var room_count: int = 20
 @export var corridor_width: int = 2
+@export var residents: Array[PackedScene] = [preload("res://characters/bad_comets/BadCometA.tscn")]
 
 var character: Array
 var room_wall_density: float = 0.9
 var corridor_wall_density: float = 0.1
+var camera: Camera
+var player: Character
+@export var level_difficulty: int = 1
 
 const CELL_SIZE = 32
 var player_spawn_room: Rect2i
 
+func setup_camera():
+	camera = camera_scene.instantiate()
+	camera.target = player
+	add_child(camera)
+
 func _ready():
-	randomize()
+	start_level()
+
+func start_level():
+	clear_level()
+	adjust_level_size()
+	generate_level_content()
+
+func clear_level():
+	for child in get_children():
+		if child != player:
+			child.queue_free()
+
+func adjust_level_size():
+	width = 30 + level_difficulty * 5
+	height = 30 + level_difficulty * 5
+	room_count = 5 + level_difficulty * 2
+
+func generate_level_content():
 	var level = generate_level(width, height, border_width)
 	create_walls_from_level(level)
 	create_navigation_regions(level)
 	spawn_player()
+	setup_camera()
+	spawn_residents(level)
 
 func generate_level(width: int, height: int, border_width: int) -> Array:
 	var level = []
@@ -144,11 +173,10 @@ func create_wall_at_position(x: int, y: int):
 func create_navigation_regions(level: Array):
 	for y in range(level.size()):
 		for x in range(level[y].size()):
-			if level[y][x] == 0:  # Если клетка пустая (не стена)
+			if level[y][x] == 0:
 				var nav_region = NavigationRegion2D.new()
 				var nav_poly = NavigationPolygon.new()
 				
-				# Создаем квадратный полигон размером с клетку
 				var half_size = CELL_SIZE / 2
 				var vertices = PackedVector2Array([
 					Vector2(-half_size, -half_size),
@@ -163,16 +191,41 @@ func create_navigation_regions(level: Array):
 				nav_region.navigation_polygon = nav_poly
 				add_child(nav_region)
 				
-				# Позиционируем регион в центре клетки
 				nav_region.position = Vector2(x * CELL_SIZE, y * CELL_SIZE)
 
 func spawn_player():
 	if player_spawn_room:
 		var center_x = player_spawn_room.position.x + player_spawn_room.size.x / 2
 		var center_y = player_spawn_room.position.y + player_spawn_room.size.y / 2
-		var player = player_scene.instantiate()
+		player = player_scene.instantiate()
 		add_child(player)
 		player.position = Vector2(center_x * CELL_SIZE, center_y * CELL_SIZE)
+
+func spawn_residents(level: Array):
+	var spawn_rooms = []
+	for y in range(level.size()):
+		for x in range(level[y].size()):
+			if level[y][x] == 0:
+				var pos = Vector2i(x, y)
+				var in_spawn_room = false
+				
+				if player_spawn_room:
+					in_spawn_room = player_spawn_room.has_point(pos)
+				
+				if not in_spawn_room:
+					spawn_rooms.append(pos)
+	
+	var resident_count = min(level_difficulty * 10, spawn_rooms.size())
+	spawn_rooms.shuffle()
+	
+	for i in range(resident_count):
+		if i >= spawn_rooms.size():
+			break
+			
+		var pos = spawn_rooms[i]
+		var resident = residents[randi() % residents.size()].instantiate()
+		add_child(resident)
+		resident.position = Vector2(pos.x * CELL_SIZE, pos.y * CELL_SIZE)
 
 func generate_irregular_polygon(x: int, y: int) -> PackedVector2Array:
 	var half_size = CELL_SIZE / 2
@@ -206,3 +259,11 @@ func generate_irregular_polygon(x: int, y: int) -> PackedVector2Array:
 			irregular_polygon.append(point)
 	
 	return irregular_polygon
+
+func restart_game():
+	level_difficulty = 1
+	start_level()
+
+func next_level():
+	level_difficulty += 1
+	start_level()

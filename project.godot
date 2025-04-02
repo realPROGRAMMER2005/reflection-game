@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Utilities="*res://utilities/utilities.gd"
 Settings="*res://settings.gd"
+EventBus="*res://event_bus/event_bus.gd"
 
 [display]
 
@@ -26,7 +27,7 @@ window/size/viewport_width=200
 window/size/viewport_height=200
 window/size/window_width_override=1280
 window/size/window_height_override=720
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
 [input]
