@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cyyxh7arjjga3"]
+[gd_scene load_steps=9 format=3 uid="uid://cyyxh7arjjga3"]
 
 [ext_resource type="Script" uid="uid://csq4avr1e0bkb" path="res://HUD/hud.gd" id="1_b7ubu"]
 [ext_resource type="FontFile" uid="uid://cj6nuyxcaw0u8" path="res://font/main_font.ttf" id="2_b7ubu"]
@@ -22,6 +22,9 @@ default_font_size = 15
 [sub_resource type="LabelSettings" id="LabelSettings_f31rt"]
 font_size = 14
 font_color = Color(0.960784, 0.639216, 0, 1)
+
+[sub_resource type="Theme" id="Theme_aa5tu"]
+default_font = ExtResource("2_b7ubu")
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_b7ubu")
@@ -69,7 +72,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-offset_right = 188.0
+offset_right = 108.0
 offset_bottom = 33.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -93,3 +96,21 @@ layout_mode = 2
 theme = SubResource("Theme_b7ubu")
 text = "0/25"
 label_settings = SubResource("LabelSettings_f31rt")
+
+[node name="LevelContainer" type="MarginContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -43.0
+offset_bottom = 22.0
+grow_horizontal = 0
+theme = SubResource("Theme_aa5tu")
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 5
+
+[node name="Level" type="Label" parent="LevelContainer"]
+layout_mode = 2
+text = "Level 1"
+vertical_alignment = 1
