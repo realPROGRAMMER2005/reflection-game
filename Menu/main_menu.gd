@@ -7,7 +7,7 @@ extends CanvasLayer
 @onready var music_slider: Slider = $OptionsMenu/MarginContainer/GridContainer/MusicSlider
 @onready var music_player: AudioStreamPlayer = $"../MusicPlayer"
 var level: PackedScene = preload("res://level/Level.tscn")
-var hud: PackedScene = preload("res://HUD/hud.tscn")
+var hud: PackedScene = preload("res://HUD/HUD.tscn")
 
 var bgm_index: int = AudioServer.get_bus_index("BGM")
 var sfx_index: int = AudioServer.get_bus_index("Master") 

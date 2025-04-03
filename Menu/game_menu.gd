@@ -5,7 +5,7 @@ extends CanvasLayer
 @onready var block_main_menu: Control = $Block
 @onready var sfx_slider: Slider = $OptionsMenu/MarginContainer/GridContainer/SFXSlider
 @onready var music_slider: Slider = $OptionsMenu/MarginContainer/GridContainer/MusicSlider
-@onready var music_player: AudioStreamPlayer = $"../AudioStreamPlayer"
+@onready var music_player: AudioStreamPlayer = $"../MusicPlayer"
 
 
 var bgm_index: int = AudioServer.get_bus_index("BGM")
