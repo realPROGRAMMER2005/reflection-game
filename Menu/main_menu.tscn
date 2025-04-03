@@ -1,9 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://cm41hqkdiyu6y"]
+[gd_scene load_steps=13 format=3 uid="uid://cm41hqkdiyu6y"]
 
 [ext_resource type="Script" uid="uid://8dxe7iybvytm" path="res://Menu/main_menu.gd" id="1_ci1se"]
 [ext_resource type="StyleBox" uid="uid://brarhp5gjq4g2" path="res://Menu/main_menu.tres" id="1_sla5p"]
+[ext_resource type="Texture2D" uid="uid://dofv5hp8682ey" path="res://Menu/game_screen.PNG" id="2_fw3rq"]
 [ext_resource type="FontFile" uid="uid://cj6nuyxcaw0u8" path="res://font/main_font.ttf" id="2_ohgnh"]
 [ext_resource type="Texture2D" uid="uid://ds5nncmrb7txl" path="res://Menu/x2.png" id="4_fw3rq"]
+
+[sub_resource type="Theme" id="Theme_cn2sd"]
+default_font = ExtResource("2_ohgnh")
+default_font_size = 50
 
 [sub_resource type="Theme" id="Theme_fw3rq"]
 default_font = ExtResource("2_ohgnh")
@@ -38,6 +43,29 @@ default_font = ExtResource("2_ohgnh")
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_ci1se")
+
+[node name="BGImage" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_fw3rq")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme = SubResource("Theme_cn2sd")
+theme_override_colors/font_color = Color(0.247059, 0.482353, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 0
+text = "Title"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = -1
@@ -111,7 +139,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.299547, 0.299547, 0.299547, 1)
+color = Color(0, 0, 0, 0.784314)
 
 [node name="MarginContainer" type="MarginContainer" parent="OptionsMenu"]
 layout_mode = 1
@@ -192,7 +220,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.299547, 0.299547, 0.299547, 1)
+color = Color(0, 0, 0, 0.784314)
 
 [node name="MarginContainer" type="MarginContainer" parent="HelpMenu"]
 layout_mode = 1
