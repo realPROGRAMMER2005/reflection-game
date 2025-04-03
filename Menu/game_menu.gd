@@ -41,9 +41,9 @@ func _on_start_game_btn_pressed() -> void:
 
 
 func _on_retry_pressed() -> void:
-	$"../Level".restart_game()
 	visible = false
 	get_tree().paused = false
+	EventBus.on_restart()
 
 
 func _on_options_btn_pressed() -> void:

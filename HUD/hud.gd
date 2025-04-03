@@ -13,6 +13,7 @@ func _ready() -> void:
 	enemies_label.text = (str(Settings.kills) + 
 		"/" + str(Settings.enemies_count))
 	
+	EventBus.restart.connect(on_restart)
 	EventBus.player_died.connect(on_player_died)
 	EventBus.level_cleared.connect(on_level_cleared)
 
@@ -65,4 +66,10 @@ func on_level_cleared():
 	screen_subtitle_label.self_modulate = Color.YELLOW
 	
 	wait_for_accept = true
+	player_died = false
+
+func on_restart():
+	clear_subtitle()
+	clear_title()
+	wait_for_accept = false
 	player_died = false

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1ttj0sk3htet"]
+
+[ext_resource type="PackedScene" uid="uid://db1ctkp2qe26d" path="res://characters/player/Player.tscn" id="1_8ku33"]
+
+[node name="GoodComet" instance=ExtResource("1_8ku33")]
+scale = Vector2(1.00089, 1.0098)
+controlled_by_player = false

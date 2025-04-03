@@ -28,7 +28,7 @@ var current_ai_state: AIStates = AIStates.STAY
 
 func _ready() -> void:
 	if type_variation:
-		var size_scale = randf_range(0.6, 3)
+		var size_scale = randf_range(0.8, 5)
 		max_health = max_health * size_scale
 		speed = speed / size_scale
 		visuals.scale = Vector2(size_scale, size_scale)

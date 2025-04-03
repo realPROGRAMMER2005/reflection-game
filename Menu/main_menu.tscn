@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cm41hqkdiyu6y"]
+[gd_scene load_steps=11 format=3 uid="uid://cm41hqkdiyu6y"]
 
 [ext_resource type="Script" uid="uid://8dxe7iybvytm" path="res://Menu/main_menu.gd" id="1_ci1se"]
 [ext_resource type="StyleBox" uid="uid://brarhp5gjq4g2" path="res://Menu/main_menu.tres" id="1_sla5p"]
@@ -32,6 +32,9 @@ border_width_bottom = 1
 [sub_resource type="Theme" id="Theme_rw3mj"]
 default_font = ExtResource("2_ohgnh")
 default_font_size = 0
+
+[sub_resource type="Theme" id="Theme_ohgnh"]
+default_font = ExtResource("2_ohgnh")
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_ci1se")
@@ -176,6 +179,8 @@ anchor_left = 0.1
 anchor_top = 0.35
 anchor_right = 0.9
 anchor_bottom = 0.65
+offset_top = -16.0
+offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_group_ = true
@@ -210,11 +215,12 @@ icon = ExtResource("4_fw3rq")
 
 [node name="Label" type="Label" parent="HelpMenu/MarginContainer"]
 layout_mode = 2
-theme = SubResource("Theme_rw3mj")
-theme_override_font_sizes/font_size = 12
-text = "Movement - Mouse
-Shoot - Left Mouse
-Pause - E"
+theme = SubResource("Theme_ohgnh")
+text = "Movement - WASD
+Shoot - LMB
+Aim - Mouse
+Pause - E
+You can destroy blocks"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/StartGameBtn" to="." method="_on_start_game_btn_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/OptionsBtn" to="." method="_on_options_btn_pressed"]
@@ -222,4 +228,3 @@ Pause - E"
 [connection signal="pressed" from="OptionsMenu/MarginContainer/GridContainer/OptionsExit" to="." method="_on_options_exit_pressed"]
 [connection signal="value_changed" from="OptionsMenu/MarginContainer/GridContainer/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="value_changed" from="OptionsMenu/MarginContainer/GridContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
-[connection signal="pressed" from="HelpMenu/MarginContainer/HelpExit" to="." method="_on_help_exit_pressed"]
