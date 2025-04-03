@@ -2,7 +2,7 @@ extends StaticBody2D
 class_name Wall
 
 @export var wall_color: Color = Color.DIM_GRAY
-
+@export var break_sound = preload("res://sound/rock_break/rock_break.mp3")
 @export var max_health: int = 3
 var current_health: int
 @export var destructable: bool = true
@@ -60,5 +60,12 @@ func get_damage(damage):
 
 func die():
 	spawn_impact_particles(global_position, {"amount": 100})
+	play_break_sound()
 	EventBus.shake(0.8, global_position)
 	queue_free()
+
+func play_break_sound():
+	var audio_player = AudioStreamPlayer2D.new()
+	audio_player.stream = break_sound
+	get_parent().add_child(audio_player)
+	audio_player.play()

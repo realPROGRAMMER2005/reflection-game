@@ -228,3 +228,4 @@ You can destroy blocks"
 [connection signal="pressed" from="OptionsMenu/MarginContainer/GridContainer/OptionsExit" to="." method="_on_options_exit_pressed"]
 [connection signal="value_changed" from="OptionsMenu/MarginContainer/GridContainer/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="value_changed" from="OptionsMenu/MarginContainer/GridContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="pressed" from="HelpMenu/MarginContainer/HelpExit" to="." method="_on_help_exit_pressed"]

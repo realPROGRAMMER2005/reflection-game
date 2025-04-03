@@ -41,7 +41,6 @@ func _on_options_exit_pressed() -> void:
 
 
 func _on_help_exit_pressed() -> void:
-	print(1)
 	help_menu.visible = false
 	block_main_menu.visible = false
 
