@@ -16,7 +16,7 @@ radius = 4.0
 radius = 4.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yyvag"]
-radius = 82.0244
+radius = 194.872
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vu54l"]
 radius = 4.0
@@ -51,9 +51,9 @@ position = Vector2(2, 0)
 shape = SubResource("CircleShape2D_xqlys")
 
 [node name="DetectionArea" parent="." instance=ExtResource("4_xqlys")]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+visible = false
 scale = Vector2(1.00579, 1.02145)
 shape = SubResource("CircleShape2D_yyvag")
 

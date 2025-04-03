@@ -31,7 +31,8 @@ func _ready() -> void:
 		var size_scale = randf_range(0.6, 3)
 		max_health = max_health * size_scale
 		speed = speed / size_scale
-		scale = Vector2(size_scale, size_scale)
+		visuals.scale = Vector2(size_scale, size_scale)
+		hitbox_area.scale = Vector2(size_scale, size_scale)
 	
 	current_health = max_health
 	hitbox_area.connect("hit", on_hit)
@@ -124,11 +125,13 @@ func on_hit(damage):
 	get_damage(damage)
 
 func get_damage(damage):
-	current_health -= damage
-	if current_health <= 0:
-		die()
+	if (not EventBus.has_level_cleared) and (not EventBus.has_player_died):
+		current_health -= damage
+		if current_health <= 0:
+			die()
 
 func die():
+	
 	if not controlled_by_player:
 		Settings.kills += 1
 	if controlled_by_player:
@@ -152,6 +155,7 @@ func shoot():
 		projectile_instance.global_position = muzzle.global_position
 		projectile_instance.global_rotation = muzzle.global_rotation
 		projectile_instance.direction = muzzle.global_transform.x.normalized()
+		projectile_instance.speed = speed + 45
 		
 
 func spawn_impact_particles(args: Dictionary = {}):

@@ -35,6 +35,8 @@ func setup_camera():
 	add_child(camera)
 
 func _ready():
+	EventBus.restart.connect(restart_game)
+	EventBus.level_change.connect(next_level)
 	start_level()
 
 func start_level():
@@ -43,9 +45,12 @@ func start_level():
 	generate_level_content()
 
 func clear_level():
+	# Удаляем всех детей, включая игрока
 	for child in get_children():
-		if child != player:
-			child.queue_free()
+		child.queue_free()
+	
+	# Сбрасываем игрока
+	player = null
 	
 	Settings.enemies_count = 0
 	Settings.kills = 0
@@ -222,7 +227,7 @@ func spawn_residents(level: Array):
 				if not in_spawn_room:
 					spawn_rooms.append(pos)
 	
-	var resident_count = min(level_difficulty * 1, spawn_rooms.size())
+	var resident_count = min(level_difficulty * 2, spawn_rooms.size())
 	spawn_rooms.shuffle()
 	Settings.enemies_count = resident_count
 	for i in range(resident_count):
@@ -279,12 +284,4 @@ func next_level():
 func _process(delta: float) -> void:
 	if Settings.kills >= Settings.enemies_count:
 		change_level = true
-
-		
-	if change_level:
-		level_change_timer += delta
-		if level_change_timer >= level_change_time:
-			change_level = false
-			next_level()
-		
-	
+		EventBus.on_level_cleared()

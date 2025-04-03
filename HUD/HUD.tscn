@@ -1,24 +1,72 @@
-[gd_scene load_steps=7 format=3 uid="uid://cyyxh7arjjga3"]
+[gd_scene load_steps=8 format=3 uid="uid://cyyxh7arjjga3"]
 
 [ext_resource type="Script" uid="uid://csq4avr1e0bkb" path="res://HUD/hud.gd" id="1_b7ubu"]
+[ext_resource type="FontFile" uid="uid://cj6nuyxcaw0u8" path="res://font/main_font.ttf" id="2_b7ubu"]
+
+[sub_resource type="Theme" id="Theme_ja1d4"]
+default_font = ExtResource("2_b7ubu")
+default_font_size = 80
+
+[sub_resource type="Theme" id="Theme_amwvk"]
+default_font = ExtResource("2_b7ubu")
+default_font_size = 25
 
 [sub_resource type="Theme" id="Theme_f31rt"]
-default_font_size = 10
+default_font = ExtResource("2_b7ubu")
+default_font_size = 15
 
 [sub_resource type="Theme" id="Theme_b7ubu"]
-default_font_size = 10
+default_font = ExtResource("2_b7ubu")
+default_font_size = 15
 
 [sub_resource type="LabelSettings" id="LabelSettings_f31rt"]
 font_size = 14
 font_color = Color(0.960784, 0.639216, 0, 1)
 
-[sub_resource type="Theme" id="Theme_ja1d4"]
-default_font_size = 50
-
-[sub_resource type="Theme" id="Theme_amwvk"]
-
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_b7ubu")
+
+[node name="ScreenTitleContainer" type="MarginContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -34.5
+offset_right = 22.0
+offset_bottom = 34.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ScreenTitleContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme = SubResource("Theme_ja1d4")
+
+[node name="ScreenSubtitleContainer" type="MarginContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.657
+anchor_right = 0.502
+anchor_bottom = 0.657
+offset_left = -87.4
+offset_top = -16.4
+offset_right = 87.6
+offset_bottom = 16.6
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="ScreenSubtitleContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme = SubResource("Theme_amwvk")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 offset_right = 188.0
@@ -45,45 +93,3 @@ layout_mode = 2
 theme = SubResource("Theme_b7ubu")
 text = "0/25"
 label_settings = SubResource("LabelSettings_f31rt")
-
-[node name="ScreenTitleContainer" type="MarginContainer" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -22.0
-offset_top = -11.5
-offset_right = 22.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="Label" type="Label" parent="ScreenTitleContainer"]
-layout_mode = 2
-size_flags_vertical = 8
-theme = SubResource("Theme_ja1d4")
-
-[node name="ScreenSubtitleContainer" type="MarginContainer" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -87.0
-offset_top = -24.0
-offset_right = 88.0
-offset_bottom = 69.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-
-[node name="Label" type="Label" parent="ScreenSubtitleContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 8
-theme = SubResource("Theme_amwvk")
-horizontal_alignment = 1
-vertical_alignment = 1
