@@ -6,6 +6,9 @@ extends CanvasLayer
 @onready var screen_subtitle_label: Label = $ScreenSubtitleContainer/Label
 @onready var level_label: Label = $"LevelContainer/Level"
 
+@export var fail_sound = preload("res://sound/fail/fail.wav")
+@export var success_sound = preload("res://sound/success/success.mp3")
+
 var player_died: bool = false
 
 var wait_for_accept: bool = false
@@ -35,6 +38,8 @@ func on_player_died():
 	
 	wait_for_accept = true
 	player_died = true
+	
+	Utilities.play_sound(fail_sound, self)
 
 func handle_accept():
 	
@@ -46,10 +51,13 @@ func handle_accept():
 				EventBus.on_restart()
 				clear_title()
 				clear_subtitle()
+
+
 			else:
 				EventBus.on_level_change()
 				clear_title()
 				clear_subtitle()
+
 			wait_for_accept = false
 				
 
@@ -70,6 +78,8 @@ func on_level_cleared():
 	
 	wait_for_accept = true
 	player_died = false
+	
+	Utilities.play_sound(success_sound, self)
 
 func on_restart():
 	clear_subtitle()
