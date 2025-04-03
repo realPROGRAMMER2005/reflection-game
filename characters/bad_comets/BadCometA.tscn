@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d3oupnll700xc"]
+[gd_scene load_steps=14 format=3 uid="uid://d3oupnll700xc"]
 
 [ext_resource type="Script" uid="uid://bxcyvptiyudsf" path="res://characters/character/character.gd" id="1_f3i1s"]
 [ext_resource type="PackedScene" uid="uid://d02yotxpxw6mp" path="res://characters/visuals/BadCometVisualsA.tscn" id="2_7iy16"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cjw8tag8oqn6g" path="res://ai/detection_area/DetectionArea.tscn" id="4_xqlys"]
 [ext_resource type="PackedScene" uid="uid://cs14g2jxdxlyd" path="res://hitbox_area/HitboxArea.tscn" id="7_emusj"]
 [ext_resource type="Script" uid="uid://comk3gcpkgivp" path="res://muzzle/muzzle.gd" id="8_vu54l"]
+[ext_resource type="PackedScene" uid="uid://cu6tsrk0wxvhe" path="res://characters/sound/CometSound.tscn" id="9_1p6t4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7iy16"]
 radius = 4.0
@@ -75,3 +76,5 @@ metadata/_custom_type_script = "uid://comk3gcpkgivp"
 [node name="RayCast2D" type="RayCast2D" parent="."]
 visible = false
 target_position = Vector2(35, 0)
+
+[node name="CometSound" parent="." instance=ExtResource("9_1p6t4")]

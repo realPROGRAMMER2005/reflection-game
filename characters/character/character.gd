@@ -10,6 +10,7 @@ var current_health: int
 @export var projectile_scene: PackedScene
 @export var fire_rate: float = 0.3
 var fire_rate_timer: float = 0
+@onready var sound: CometSounds = $CometSound
 
 @onready var detection_area: DetectionArea = get_node("DetectionArea")
 @onready var hitbox_area: HitboxArea = get_node("HitboxArea")
@@ -131,6 +132,8 @@ func get_damage(damage):
 			die()
 
 func die():
+	if sound:
+		sound.play_death_sound()
 	
 	if not controlled_by_player:
 		Settings.kills += 1
@@ -156,6 +159,9 @@ func shoot():
 		projectile_instance.global_rotation = muzzle.global_rotation
 		projectile_instance.direction = muzzle.global_transform.x.normalized()
 		projectile_instance.speed = speed + 45
+		
+		if sound:
+			sound.play_shot_sound()
 		
 
 func spawn_impact_particles(args: Dictionary = {}):

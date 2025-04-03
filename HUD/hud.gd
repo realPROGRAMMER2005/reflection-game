@@ -27,7 +27,7 @@ func on_player_died():
 	screen_title_label.text = "DEAD"
 	screen_title_label.self_modulate = Color.RED
 	
-	screen_subtitle_label.text = "Press SPACE to Return to Menu"
+	screen_subtitle_label.text = "Press SPACE to Return to Restart"
 	screen_subtitle_label.self_modulate = Color.YELLOW
 	
 	wait_for_accept = true

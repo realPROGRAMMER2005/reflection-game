@@ -9,6 +9,8 @@ signal hitbox_area_collided
 
 var ricocheted: bool = false
 var sender: Node2D
+@export var impact_sound = preload("res://sound/projectile_impact/projectile_impact.mp3")
+@export var death_sound = preload("res://sound/glass_break/glass_break_1.mp3")
 
 @export var speed: int = 250
 @export var damage: int = 1
@@ -44,6 +46,7 @@ func _physics_process(delta: float) -> void:
 	var collision = move_and_collide(velocity * delta)
 	
 	if collision:
+		play_impact_sound()
 		var collider = collision.get_collider()
 		if collider is Wall:
 			collider.emit_signal('projectile_collided', global_position, damage)
@@ -61,6 +64,7 @@ func _physics_process(delta: float) -> void:
 			die()
 
 func on_hitbox_area_collided():
+	play_impact_sound()
 	direction = -direction
 	visuals.global_rotation = direction.angle()
 	visuals.spawn_impact_particles({'amount': 8, 'initial_velocity_max': 50})
@@ -69,4 +73,12 @@ func on_hitbox_area_collided():
 func die():
 	visuals.spawn_impact_particles()
 	EventBus.shake(0.4, global_position)
+	play_impact_sound()
 	queue_free()
+
+func play_impact_sound():
+	var audio_player = AudioStreamPlayer2D.new()
+	audio_player.stream = impact_sound
+	get_parent().add_child(audio_player)
+	audio_player.play()
+	audio_player.finished.connect(audio_player.queue_free)
