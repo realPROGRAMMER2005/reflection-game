@@ -2,6 +2,7 @@
 
 [sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_j3pel"]
 resource_name = "Limiter"
+soft_clip_db = 0.0
 soft_clip_ratio = 20.0
 
 [resource]
