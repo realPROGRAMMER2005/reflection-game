@@ -275,10 +275,12 @@ func generate_irregular_polygon(x: int, y: int) -> PackedVector2Array:
 
 func restart_game():
 	level_difficulty = 1
+	Settings.level_difficulty = level_difficulty
 	start_level()
 
 func next_level():
 	level_difficulty += 1
+	Settings.level_difficulty = level_difficulty
 	start_level()
 
 func _process(delta: float) -> void:

@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var enemies_label: Label = $"MarginContainer/HBoxContainer/EnemiesCount"
 @onready var screen_title_label: Label = $"ScreenTitleContainer/Label"
 @onready var screen_subtitle_label: Label = $ScreenSubtitleContainer/Label
+@onready var level_label: Label = $"LevelContainer/Level"
 
 var player_died: bool = false
 
@@ -12,6 +13,7 @@ var wait_for_accept: bool = false
 func _ready() -> void:
 	enemies_label.text = (str(Settings.kills) + 
 		"/" + str(Settings.enemies_count))
+	level_label.text = "Level " + str(Settings.level_difficulty)
 	
 	EventBus.restart.connect(on_restart)
 	EventBus.player_died.connect(on_player_died)
@@ -20,6 +22,7 @@ func _ready() -> void:
 func _process(delta) -> void:
 	enemies_label.text = (str(Settings.kills) + 
 		"/" + str(Settings.enemies_count))
+	level_label.text = "Level " + str(Settings.level_difficulty)
 	
 	handle_accept()
 

@@ -5,7 +5,7 @@ extends CanvasLayer
 @onready var block_main_menu: Control = $Block
 @onready var sfx_slider: Slider = $OptionsMenu/MarginContainer/GridContainer/SFXSlider
 @onready var music_slider: Slider = $OptionsMenu/MarginContainer/GridContainer/MusicSlider
-@onready var music_player: AudioStreamPlayer = $"../AudioStreamPlayer"
+@onready var music_player: AudioStreamPlayer = $"../MusicPlayer"
 var level: PackedScene = preload("res://level/Level.tscn")
 var hud: PackedScene = preload("res://HUD/hud.tscn")
 
@@ -22,6 +22,8 @@ func _on_start_game_btn_pressed() -> void:
 	print("The game has started!")
 	add_sibling(hud.instantiate())
 	add_sibling(level.instantiate())
+	music_player.set_new_state(music_player.IN_GAME)
+	
 	queue_free()
 
 
