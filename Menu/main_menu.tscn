@@ -8,7 +8,7 @@
 
 [sub_resource type="Theme" id="Theme_cn2sd"]
 default_font = ExtResource("2_ohgnh")
-default_font_size = 50
+default_font_size = 45
 
 [sub_resource type="Theme" id="Theme_fw3rq"]
 default_font = ExtResource("2_ohgnh")
@@ -65,7 +65,7 @@ theme = SubResource("Theme_cn2sd")
 theme_override_colors/font_color = Color(0.247059, 0.482353, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 0
-text = "Title"
+text = "Reflection Chaos"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = -1
