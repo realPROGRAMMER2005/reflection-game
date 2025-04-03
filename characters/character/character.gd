@@ -129,8 +129,11 @@ func get_damage(damage):
 		die()
 
 func die():
-	if !controlled_by_player:
+	if not controlled_by_player:
 		Settings.kills += 1
+	if controlled_by_player:
+		EventBus.on_player_died()
+	
 	
 	spawn_impact_particles()
 	EventBus.shake(5, global_position)

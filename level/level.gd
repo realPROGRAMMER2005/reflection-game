@@ -15,6 +15,9 @@ var border_width = 1
 @export var corridor_width: int = 2
 @export var residents: Array[PackedScene] = [preload("res://characters/bad_comets/BadCometA.tscn")]
 
+var level_change_time: float = 5
+var level_change_timer: float = 0
+var change_level: bool = false
 var character: Array
 var room_wall_density: float = 0.9
 var corridor_wall_density: float = 0.1
@@ -22,7 +25,7 @@ var camera: Camera
 var player: Character
 @export var level_difficulty: int = 1
 
-const CELL_SIZE = 32
+const CELL_SIZE = 24
 var player_spawn_room: Rect2i
 
 
@@ -219,13 +222,12 @@ func spawn_residents(level: Array):
 				if not in_spawn_room:
 					spawn_rooms.append(pos)
 	
-	var resident_count = min(level_difficulty * 10, spawn_rooms.size())
+	var resident_count = min(level_difficulty * 1, spawn_rooms.size())
 	spawn_rooms.shuffle()
 	Settings.enemies_count = resident_count
 	for i in range(resident_count):
 		if i >= spawn_rooms.size():
 			Settings.enemies_count = i
-			print("Enemies count: " + str(i))
 			break
 			
 		var pos = spawn_rooms[i]
@@ -273,3 +275,16 @@ func restart_game():
 func next_level():
 	level_difficulty += 1
 	start_level()
+
+func _process(delta: float) -> void:
+	if Settings.kills >= Settings.enemies_count:
+		change_level = true
+
+		
+	if change_level:
+		level_change_timer += delta
+		if level_change_timer >= level_change_time:
+			change_level = false
+			next_level()
+		
+	
