@@ -78,6 +78,7 @@ func find_node_by_class_name(root_node: Node, desired_class: Script) -> Node:
 func play_sound_2d(sound, parent_node):
 	var audio_player = AudioStreamPlayer2D.new()
 	audio_player.stream = sound
+	audio_player.bus = "SFX"
 	parent_node.add_child(audio_player)
 	audio_player.play()
 	audio_player.finished.connect(audio_player.queue_free)
@@ -85,6 +86,7 @@ func play_sound_2d(sound, parent_node):
 func play_sound(sound, parent_node):
 	var audio_player = AudioStreamPlayer.new()
 	audio_player.stream = sound
+	audio_player.bus = "SFX"
 	parent_node.add_child(audio_player)
 	audio_player.play()
 	audio_player.finished.connect(audio_player.queue_free)

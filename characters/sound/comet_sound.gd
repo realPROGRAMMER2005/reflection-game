@@ -7,6 +7,7 @@ class_name CometSounds
 func play_shot_sound():
 	var audio_player = AudioStreamPlayer2D.new()
 	audio_player.stream = shoot_sound
+	audio_player.bus = "SFX"
 	get_parent().get_parent().add_child(audio_player)
 	audio_player.play()
 	audio_player.finished.connect(audio_player.queue_free)
@@ -14,6 +15,7 @@ func play_shot_sound():
 func play_death_sound():
 	var audio_player = AudioStreamPlayer2D.new()
 	audio_player.stream = death_sound
+	audio_player.bus = "SFX"
 	get_parent().get_parent().add_child(audio_player)
 	audio_player.play()
 	audio_player.finished.connect(audio_player.queue_free)

@@ -10,7 +10,7 @@ var level: PackedScene = preload("res://level/Level.tscn")
 var hud: PackedScene = preload("res://HUD/HUD.tscn")
 
 var bgm_index: int = AudioServer.get_bus_index("BGM")
-var sfx_index: int = AudioServer.get_bus_index("Master") 
+var sfx_index: int = AudioServer.get_bus_index("SFX") 
 
 
 func _ready():
@@ -22,6 +22,7 @@ func _on_start_game_btn_pressed() -> void:
 	print("The game has started!")
 	add_sibling(hud.instantiate())
 	add_sibling(level.instantiate())
+	$"../GameMenu"._ready()
 	music_player.set_new_state(music_player.IN_GAME)
 	
 	queue_free()
@@ -49,7 +50,7 @@ func _on_help_exit_pressed() -> void:
 
 func _on_sfx_slider_value_changed(value: float) -> void:
 	Settings.sfx_volume = value
-	var db: float = linear_to_db(Settings.music_volume / 100)
+	var db: float = linear_to_db(Settings.sfx_volume / 100)
 	AudioServer.set_bus_volume_db(sfx_index, db)
 
 func _on_music_slider_value_changed(value: float) -> void:

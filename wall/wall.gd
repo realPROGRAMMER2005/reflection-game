@@ -67,5 +67,6 @@ func die():
 func play_break_sound():
 	var audio_player = AudioStreamPlayer2D.new()
 	audio_player.stream = break_sound
+	audio_player.bus = "SFX"
 	get_parent().add_child(audio_player)
 	audio_player.play()
