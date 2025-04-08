@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dd8apek1xdf1q"]
+[gd_scene load_steps=11 format=3 uid="uid://dd8apek1xdf1q"]
 
 [ext_resource type="Script" uid="uid://bmbrm1aeqxi0k" path="res://Menu/game_menu.gd" id="1_jprcw"]
 [ext_resource type="StyleBox" uid="uid://brarhp5gjq4g2" path="res://Menu/main_menu.tres" id="2_5rxej"]
@@ -29,6 +29,10 @@ border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
+
+[sub_resource type="Theme" id="Theme_x4s74"]
+default_font = ExtResource("2_ngkvk")
+default_font_size = 0
 
 [sub_resource type="Theme" id="Theme_ngkvk"]
 default_font = ExtResource("2_ngkvk")
@@ -156,7 +160,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 12
+theme = SubResource("Theme_x4s74")
 text = "Options"
 
 [node name="OptionsExit" type="Button" parent="OptionsMenu/MarginContainer/GridContainer"]
@@ -167,7 +171,7 @@ icon = ExtResource("3_xxfb2")
 
 [node name="SFXLabel" type="Label" parent="OptionsMenu/MarginContainer/GridContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
+theme = SubResource("Theme_x4s74")
 text = "SFX Volume"
 
 [node name="SFXSlider" type="HSlider" parent="OptionsMenu/MarginContainer/GridContainer"]
@@ -178,7 +182,7 @@ rounded = true
 
 [node name="MusicLabel" type="Label" parent="OptionsMenu/MarginContainer/GridContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
+theme = SubResource("Theme_x4s74")
 text = "Music Volume"
 
 [node name="MusicSlider" type="HSlider" parent="OptionsMenu/MarginContainer/GridContainer"]

@@ -79,6 +79,7 @@ func die():
 func play_impact_sound():
 	var audio_player = AudioStreamPlayer2D.new()
 	audio_player.stream = impact_sound
+	audio_player.bus = "SFX"
 	get_parent().add_child(audio_player)
 	audio_player.play()
 	audio_player.finished.connect(audio_player.queue_free)
